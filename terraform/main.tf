@@ -11,7 +11,6 @@ terraform {
 
 provider "docker" {}
 
-# MySQL контейнер через Docker
 resource "docker_image" "mysql" {
   name         = "mysql:8.0"
   keep_locally = true
@@ -55,13 +54,12 @@ resource "docker_container" "mysql" {
   }
 }
 
-# Wait для инициализации MySQL
+
 resource "time_sleep" "wait_for_mysql" {
   depends_on      = [docker_container.mysql]
   create_duration = "30s"
 }
 
-# Python образ для генератора
 resource "docker_image" "generator" {
   name         = "mysql_generator:latest"
   keep_locally = true
@@ -74,7 +72,7 @@ resource "docker_image" "generator" {
   depends_on = [docker_container.mysql]
 }
 
-# Запуск генератора данных
+
 resource "docker_container" "generator" {
   name  = "mysql_data_generator"
   image = docker_image.generator.id
