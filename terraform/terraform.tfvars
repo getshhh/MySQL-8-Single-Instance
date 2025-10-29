@@ -1,0 +1,5 @@
+mysql_root_password = "rootpassword"
+db_username         = "testuser"
+db_password         = "testpassword"
+database_name       = "test_database"
+mysql_data_volume   = "./mysql_data"
